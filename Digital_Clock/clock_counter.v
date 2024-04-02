@@ -15,7 +15,7 @@ module clock_counter(
     output [5:0] o_count_m,
     output [5:0] o_count_s
 );
-
+test
 reg [5:0] r_count_s, r_count_m, r_count_h, save_count_s, save_count_m, save_count_h;
 reg buff_down, buff_up, edge_down, edge_up;
 

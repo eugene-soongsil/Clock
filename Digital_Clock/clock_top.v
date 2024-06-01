@@ -23,15 +23,17 @@ reg [12:0] cnt;
 clock_counter count(.i_clk(clk), .i_reset(reset), .i_clk_div(clk_div), .i_mode(mode),
  .i_set(set), .i_hour(hour), .i_min(min), .i_sec(sec), .i_start(start), .i_resave(resave),
  .i_up(up), .i_down(down), .o_count_h(num_h), .o_count_m(num_m), .o_count_s(num_s));
+
 clock_segment seg_h_10(.clk(clk), .reset(reset), .num(num_h / 10), .seg(seg_hour_10));
 clock_segment seg_h(.clk(clk), .reset(reset), .num(num_h % 10), .seg(seg_hour_1));
 clock_segment seg_m_10(.clk(clk), .reset(reset), .num(num_m / 10), .seg(seg_minute_10));
 clock_segment seg_m(.clk(clk), .reset(reset), .num(num_m % 10), .seg(seg_minute_1));
 clock_segment seg_s_10(.clk(clk), .reset(reset), .num(num_s / 10), .seg(seg_second_10));
 clock_segment seg_s(.clk(clk), .reset(reset), .num(num_s % 10), .seg(seg_second_1));
+
 clock_div clkdiv(.i_clk(clk), .i_reset(reset), .o_clk_out(clk_div));
 
-always@(posedge clk or negedge reset)begin
+always@(posedge clk or negedge reset)begin //LED hz declare
     if(!reset)begin
         sel <= 3'b111;
         cnt <= 0;
@@ -65,7 +67,7 @@ always@(posedge clk or negedge reset)begin
     end
 end
 
-always@*begin
+always@*begin   //seg select
     case(sel)
     3'b000:begin
         in <= 8'b1111_1110;

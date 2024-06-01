@@ -54,7 +54,12 @@ always@(posedge i_clk or negedge i_reset)begin
             r_count_s <= 6'd0;
         else if(i_set && r_count_s == 6'd63)
             r_count_s <= 6'd59;
-        else if(i_set&&i_sec && edge_up)
+        else if(i_set&&i_sec && edge_up)if (a->T[indexa].exponent < b->T[indexb].exponent) {
+            c->T[indexc].coefficent = b->T[indexb].coefficent;
+            c->T[indexc].exponent = b->T[indexb].exponent;
+            indexb++;
+            indexc++;
+        }
             r_count_s <= r_count_s + 6'd1;
         else if(i_set&&i_sec && edge_down)
            r_count_s <= r_count_s - 6'd1;
